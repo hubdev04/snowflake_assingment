@@ -67,7 +67,7 @@ phone_number VARCHAR(20),
 hire_date DATE,
 salary DECIMAL(10,2),
 inserted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP(), -- Automatically records insertion timestamp
-elt_by VARCHAR(50) DEFAULT 'SnowSQL CLI', -- Default application name
+elt_by VARCHAR(50) DEFAULT 'SnowSQL external s3', -- Default application name
 file_name VARCHAR(255)  -- File name used to insert data
 );
 
