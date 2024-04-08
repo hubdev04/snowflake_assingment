@@ -43,31 +43,35 @@ use role admin;
 
 
 --(6) creating table employee_data_internal from emp_assingment.csv for internal staging
+
 CREATE TABLE my_schema.employee_data_internal (
-    EMPLOYEE_ID INT,
-    FIRST_NAME VARCHAR(50),
-    LAST_NAME VARCHAR(50),
-    EMAIL VARCHAR(100),
-    PHONE_NUMBER VARCHAR(20),
-    HIRE_DATE DATE,
-    JOB_ID VARCHAR(20),
-    SALARY DECIMAL(10, 2),
-    MANAGER_ID INT,
-    DEPARTMENT_ID INT
+employee_id INT,
+first_name VARCHAR(50),
+last_name VARCHAR(50),
+email VARCHAR(100),
+phone_number VARCHAR(20),
+hire_date DATE,
+salary DECIMAL(10,2),
+inserted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP(), -- Automatically records insertion timestamp
+elt_by VARCHAR(50) DEFAULT 'SnowSQL CLI', -- Default application name
+file_name VARCHAR(255) -- File name used to insert data
 );
+
 -- (7)creating table employee_data_internal from emp_assingment.csv for external staging
-CREATE OR REPLACE TABLE my_schema.employee_data_external (
-    EMPLOYEE_ID INT,
-    FIRST_NAME VARCHAR(50),
-    LAST_NAME VARCHAR(50),
-    EMAIL VARCHAR(100),
-    PHONE_NUMBER VARCHAR(20),
-    HIRE_DATE DATE,
-    JOB_ID VARCHAR(20),
-    SALARY DECIMAL(10, 2),
-    MANAGER_ID INT,
-    DEPARTMENT_ID INT
+CREATE TABLE assignment_db.my_schema.employee_data_external (
+employee_id INT,
+first_name VARCHAR(50),
+last_name VARCHAR(50),
+email VARCHAR(100),
+phone_number VARCHAR(20),
+hire_date DATE,
+salary DECIMAL(10,2),
+inserted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP(), -- Automatically records insertion timestamp
+elt_by VARCHAR(50) DEFAULT 'SnowSQL CLI', -- Default application name
+file_name VARCHAR(255)  -- File name used to insert data
 );
+
+
 --creating a new stage;
 create stage my_emp_stage;
 --granting all permissions to admin role
@@ -125,12 +129,19 @@ create file format my_parquet_format TYPE =parquet;
 select * from table (INFER_SCHEMA (LOCATION =>'@my_emp_stage',FILE
                                             _FORMAT=>'my_parquet_format'));
 
---(12)creating a mask for the question
+
 CREATE MASKING POLICY PII_masking_policy
   AS (val STRING)
   RETURNS STRING ->
-  CASE
+  CASE 
     WHEN CURRENT_ROLE() = 'DEVELOPER' THEN '**MASKED**'
     ELSE val
   END;
 
+-- Grant USAGE privilege on the masking policy to the developer role
+ALTER TABLE employee_data_internal MODIFY COLUMN EMAIL SET MASKING POLICY PII_masking_policy;
+ALTER TABLE employee_data_internal MODIFY COLUMN EMPLOYEE_ID SET MASKING POLICY PII_masking_policy;
+
+-- Grant SELECT privileges on the masked columns to the 'developer' role
+GRANT SELECT(EMAIL) ON employee_data_internal TO ROLE developer;
+GRANT SELECT(EMPLOYEE_ID) ON employee_data_internal TO ROLE developer;
