@@ -23,4 +23,6 @@ Perform required operations on the data in Snowflake as mentioned in the file.
 # Loaded data in table 
 - for internal staging
 <img width="1440" alt="Screenshot 2024-04-10 at 12 15 43 PM" src="https://github.com/hubdev04/snowflake_assingment/assets/76955127/31500a87-3c21-46f5-833b-cc2127af3198">
-
+- for parquet file
+  
+<img width="833" alt="Screenshot 2024-04-04 at 3 35 14 PM" src="https://github.com/hubdev04/snowflake_assingment/assets/76955127/6475da55-60c5-46bb-8383-81cc528ddba0">
