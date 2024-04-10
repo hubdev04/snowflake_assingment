@@ -51,10 +51,13 @@ last_name VARCHAR(50),
 email VARCHAR(100),
 phone_number VARCHAR(20),
 hire_date DATE,
+job_id varchar(100),
 salary DECIMAL(10,2),
+manager_id int,
+department_id int,
 inserted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP(), -- Automatically records insertion timestamp
 elt_by VARCHAR(50) DEFAULT 'SnowSQL CLI', -- Default application name
-file_name VARCHAR(255) -- File name used to insert data
+file_name VARCHAR(255) DEFAULT 'emp_assignment.csv' -- File name used to insert data
 );
 
 -- (7)creating table employee_data_internal from emp_assingment.csv for external staging
@@ -65,10 +68,13 @@ last_name VARCHAR(50),
 email VARCHAR(100),
 phone_number VARCHAR(20),
 hire_date DATE,
+job_id varchar(100),
 salary DECIMAL(10,2),
+manager_id int,
+department_id int,
 inserted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP(), -- Automatically records insertion timestamp
 elt_by VARCHAR(50) DEFAULT 'SnowSQL external s3', -- Default application name
-file_name VARCHAR(255)  -- File name used to insert data
+file_name VARCHAR(255) -- File name used to insert data
 );
 
 
@@ -83,14 +89,21 @@ GRANT ALL PRIVILEGES ON STAGE my_emp_stage TO ROLE admin;
 --(created in terminal)PUT file:///Users/devanshpanda/Downloads/emp_assignment.csv @my_emp_stage;
 
 --(COPIED INTO INTERNAL TABLE)(9)
-COPY INTO my_schema.employee_data_internal
-                                  FROM @my_emp_stage
-                                  FILE_FORMAT = (
-                                      TYPE = CSV
-                                      SKIP_HEADER = 1,DATE_FORMAT='YYYY-MM-DD'
-                                  )
-                                  PATTERN = '.*emp_assignment\.csv\.gz'
-                                  ON_ERROR = 'SKIP_FILE';
+copy into employee_data_internal (EMPLOYEE_ID,
+    FIRST_NAME,
+    LAST_NAME,
+    EMAIL ,
+    PHONE_NUMBER ,
+    HIRE_DATE ,
+    JOB_ID ,
+    SALARY ,
+    COMMISSION_PCT ,
+    MANAGER_ID ,
+    DEPARTMENT_ID,
+    elt_ts,
+    file_name) from 
+(SELECT T.$1, T.$2, T.$3, T.$4, T.$5, T.$6, T.$7, T.$8, T.$9, T.$10, METADATA$START_SCAN_TIME, METADATA$FILENAME FROM @my_stage/employee_int.csv.gz (file_format =>  emp_csv_format) AS T)
+pattern = '.*emp_assignemtn\\.csv\\.gz';
 
 --using assingment_db.my_schema for furthur queries
 use assingment_db.my_schema;
