@@ -15,10 +15,7 @@ An external stage table was created so that using  Amazon S3 we can get the data
 
 # Stage Table Details
 Name: my_emp_stage for internal staging , my_emp_external_stage for external staging 
-CSV
-Instructions
-Load the CSV file into Snowflake using the provided stage table.
-Perform required operations on the data in Snowflake as mentioned in the file.
+
 
 # Loaded data in table 
 - for internal staging
