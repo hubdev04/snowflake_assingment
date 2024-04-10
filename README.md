@@ -13,20 +13,14 @@ The CSV file used in this assignment is named emp_assignment.csv. It contains th
 # External Stage Table
 An external stage table was created so that using  Amazon S3 we can get the data back . The stage table provides a way to load data from files stored in an S3 bucket directly into Snowflake.
 
-Stage Table Details
-Name: my_stage
-Location: s3://your-bucket-name/path/to/files/
-File Format: CSV
+# Stage Table Details
+Name: my_emp_stage for internal staging , my_emp_external_stage for external staging 
+CSV
 Instructions
 Load the CSV file into Snowflake using the provided stage table.
-Perform required operations on the data in Snowflake.
-Document the process and results.
-Files
-data.csv: Contains the data required for the assignment.
-create_external_stage.sql: SQL script to create the external stage table in Snowflake.
-Usage
-Clone this repository.
-Load create_external_stage.sql script into your Snowflake environment to create the external stage table.
-Use Snowflake SQL commands to perform operations on the data.
-Author
-[Your Name]
+Perform required operations on the data in Snowflake as mentioned in the file.
+
+# Loaded data in table 
+- for internal staging
+<img width="1440" alt="Screenshot 2024-04-10 at 12 15 43 PM" src="https://github.com/hubdev04/snowflake_assingment/assets/76955127/31500a87-3c21-46f5-833b-cc2127af3198">
+
