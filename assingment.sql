@@ -158,3 +158,11 @@ ALTER TABLE employee_data_internal MODIFY COLUMN EMPLOYEE_ID SET MASKING POLICY 
 -- Grant SELECT privileges on the masked columns to the 'developer' role
 GRANT SELECT(EMAIL) ON employee_data_internal TO ROLE developer;
 GRANT SELECT(EMPLOYEE_ID) ON employee_data_internal TO ROLE developer;
+grant select on all tables in schema assingment_db.my_schema to role PII;
+grant select on all tables in schema assingment_db.my_schema to role DEVELOPER;
+
+
+use role pii;
+select * from assingment_db.my_schema.employee_data_external;
+use role developer;
+select * from assingment_db.my_schema.employee_data_internal;
