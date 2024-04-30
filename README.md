@@ -17,6 +17,14 @@ An external stage table was created so that using  Amazon S3 we can get the data
 Name: my_emp_stage for internal staging , my_emp_external_stage for external staging 
 
 
+#  Folder Strucutre
+
+    .
+    ├── src                     # Source files (containing .sql file)
+    ├── data                    # contains emp_assingment.csv dataset
+    └── README.md
+
+
 # Loaded data in table 
 - for internal staging
 <img width="1440" alt="Screenshot 2024-04-10 at 12 15 43 PM" src="https://github.com/hubdev04/snowflake_assingment/assets/76955127/31500a87-3c21-46f5-833b-cc2127af3198">
