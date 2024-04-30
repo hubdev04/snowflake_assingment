@@ -2,8 +2,8 @@
 This repository contains code and documentation for the Snowflake assignment.
 
 # Data Infrastructure Overview
-   • The Snowflake warehouse used for this assignment is named assingment_wh.
-   • The database utilized in this assignment is called assingment_db under and schema my_schema.
+   - The Snowflake warehouse used for this assignment is named assingment_wh .
+   - The database utilized in this assignment is called assingment_db under and schema my_schema.
 
 # CSV File Used
 The CSV file used in this assignment is named emp_assignment.csv. It contains the data required for the loading.
@@ -24,10 +24,10 @@ Name: my_emp_stage for internal staging , my_emp_external_stage for external sta
     └── README.md
 
 # Usage 
-    • According to the sql commands written in ./src/assingment.sql we have created warehouse,database and schema
-    • After that according to question requirements, created different roles and assinged grants accordingly
-    • Using admin role run all the queries according to the comments (sometimes we need accountadmin to grant privileges to admin)
-    • Created Table and loaded data from internal and external stages as mentioned above.
+   - According to the sql commands written in ./src/assingment.sql we have created warehouse,database and schema
+   - After that according to question requirements, created different roles and assinged grants accordingly
+   - Using admin role run all the queries according to the comments (sometimes we need accountadmin to grant privileges to admin)
+   - Created Table and loaded data from internal and external stages as mentioned above.
 
 
 # Loaded data in table 
